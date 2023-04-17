@@ -14,12 +14,15 @@ class Form extends React.Component {
         e.preventDefault()
         
         this.props.onChange(this.state.value)
+        this.setState({
+            value: ''
+        })
     }
 
     onChange = (e) => {
         const {value} = e.target
         this.setState({
-            value
+            value: +value
         })
     }
 

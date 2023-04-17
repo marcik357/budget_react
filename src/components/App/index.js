@@ -3,6 +3,10 @@ import Balance from "../Balance/index.js";
 import Transactions from "../Transactions/index.js";
 import Form from "../Form/index.js";
 
+import { Wrapper } from './style.js';
+
+let id = 0
+
 class App extends React.Component {
     constructor() {
         super()
@@ -15,19 +19,19 @@ class App extends React.Component {
     onChange = (value) => {
         this.setState((state) => ({
             balance: state.balance + Number(value),
-            transactions: [{ value, label: 'change' }, ...state.transactions]
+            transactions: [{ value, label: 'change', id: ++id }, ...state.transactions]
         }))
     }
 
     render() {
         return (
-            <>
+            <Wrapper>
                 <Balance balance={this.state.balance} />
                 <Form onChange={this.onChange} />
                 <hr />
 
                 <Transactions transactions={this.state.transactions} />
-            </>
+            </Wrapper>
         )
     }
 }
