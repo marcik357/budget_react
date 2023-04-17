@@ -1,40 +1,44 @@
-import React from 'react';
-import Balance from "../Balance/index.js";
-import Transactions from "../Transactions/index.js";
-import Form from "../Form/index.js";
+import { Wrapper } from './style.js';
+import {
+    createBrowserRouter,
+    RouterProvider,
+} from "react-router-dom";
 
-import { Wrapper, GlobalStyle } from './style.js';
+import Root from "../../routes/root.js";
 
-let id = 0
+import ErrorPage from "../../error-page.js";
 
-class App extends React.Component {
-    constructor() {
-        super()
-        this.state = {
-            balance: 0,
-            transactions: [],
-        }
-    }
+import Home from '../../routes/Home/index.js'
+import Statistics from '../../routes/Statistics/index.js'
+import About from '../../routes/About/index.js'
 
-    onChange = (value) => {
-        this.setState((state) => ({
-            balance: state.balance + Number(value),
-            transactions: [{ value, label: 'change', id: ++id }, ...state.transactions]
-        }))
-    }
+const router = createBrowserRouter([
+    {
+        path: "/",
+        element: <Root />,
+        errorElement: <ErrorPage />,
+    },
+    {
+        path: "home",
+        element: <Home />,
+    },
+    {
+        path: "statistics",
+        element: <Statistics />,
+    },
+    {
+        path: "about",
+        element: <About />,
+    },
+]);
 
-    render() {
-        return (
-            <Wrapper>
-                <GlobalStyle/>
-                <Balance balance={this.state.balance} />
-                <Form onChange={this.onChange} />
-                <hr />
+const App = () => {
+    return (
+        <Wrapper>
+            <RouterProvider router={router} />
 
-                <Transactions transactions={this.state.transactions} />
-            </Wrapper>
-        )
-    }
+        </Wrapper>
+    )
 }
 
 export default App
